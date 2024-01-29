@@ -30,3 +30,10 @@ PUT Actualizar
 DELETE Borrar
 
 ![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/2a12e51f-3962-4b79-90dd-cbe5f736c184)
+
+
+
+HTTPS PETICIONES AVANCES
+
+![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/6cc490fe-6a7b-4418-87b1-c397167faebb)
+
