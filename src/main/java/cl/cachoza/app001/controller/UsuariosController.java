@@ -1,6 +1,7 @@
 package cl.cachoza.app001.controller;
 
  
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.cachoza.app001.exception.ResourceNotFoundException;
 import cl.cachoza.app001.model.Usuario;
+import cl.cachoza.app001.model.UsuarioResponse;
+
 import cl.cachoza.app001.repository.UsuarioRepository;
  
  
@@ -43,16 +46,19 @@ public class UsuariosController {
 	}
 
 	@GetMapping("/usuarios/{id}")
-	public ResponseEntity<Usuario> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
+	public ResponseEntity<UsuarioResponse> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
 			throws ResourceNotFoundException {
-		
+		UsuarioResponse usuarios2 = new UsuarioResponse();
 		Usuario usuarios = usrRepository.findById(usuarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
-		System.out.println(" usuarios :::: " + usuarios);
 		
-		//Usuario usuarios = usrRepository.findById(usuarioId)
-		//		.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
-		return ResponseEntity.ok().body(usuarios);
+		usuarios2.setId( usuarios.getId());
+		usuarios2.setCreated( usuarios.getCreate()) ;
+		usuarios2.setModified( usuarios.getModified() );
+		usuarios2.setLast_login( usuarios.getLast_login() );
+		usuarios2.setIsactive(usuarios.getIsactive());
+		
+		return ResponseEntity.ok().body(usuarios2);
 	}
 
 	@PostMapping("/usuarios")

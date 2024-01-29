@@ -60,15 +60,31 @@ public class Usuario {
 	
 	
 	private String token;
+	
+	private Boolean isactive = true;
+	
+	/**
+	 * @return the isactive
+	 */
+	public Boolean getIsactive() {
+		return isactive;
+	}
+
+	/**
+	 * @param isactive the isactive to set
+	 */
+	public void setIsactive(Boolean isactive) {
+		this.isactive = isactive;
+	}
+
 	public Usuario() {
 
 	}
 
-	public Usuario( String name, String email, String password, String token) {
+	public Usuario( String name, String email, String password) {
 		this.name 		= name;
 		this.email 		= email;
 		this.password 	= password;
-		this.token 		= token;
 	}
 
 	/**
@@ -144,8 +160,8 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		// return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + ", modified=" + this.modified +  ", last_login=" + this.last_login +  ", token=" + this.token +"]";
-		return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + "]";
+		return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + ", modified=" + this.modified +  ", last_login=" + this.last_login +  ", token=" + this.token +", isactive=" + this.isactive +"]";
+
 	}
 	
 }
