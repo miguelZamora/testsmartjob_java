@@ -14,7 +14,7 @@ localhost:8080/api/v1/usuarios
 POST
 {
     "name":"miguel",
-    "email":"mzmprog@gmail.com",
+    "email":"@gmail.com",
     "password":"123456",
     "token" : "dhvhd"
 }
@@ -30,15 +30,15 @@ localhost:8080/api/v1/usuarios/1
 
 {
     "name": "miguel",
-    "email": "mzmprog@gmail.com",
+    "email": "doto2@gmail.com",
     "password": "123456"
 }
 
 RESP
 
 {
-    "name":"miguel Angel",
-    "email":"mzmproga@gmail.com",
+    "name":"jhon doe",
+    "email":"doto3a@gmail.com",
     "password":"123456",
     "token" : "dhvhd"
 }
