@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import cl.cachoza.app001.model.Usuario;
 
-
 @Repository
 public interface UsuarioRepository extends  JpaRepository<Usuario, Long>{
-
-	 
 
 }

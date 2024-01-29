@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.cachoza.app001.exception.ErrorDetails;
 import cl.cachoza.app001.exception.ResourceNotFoundException;
 import cl.cachoza.app001.model.Usuario;
 import cl.cachoza.app001.model.UsuarioResponseCrear;
 import cl.cachoza.app001.repository.UsuarioRepository;
+import cl.cachoza.app001.util.ValidarUsuario;
 import jakarta.validation.Valid;
  
  
@@ -41,35 +44,58 @@ public class UsuariosController {
 	}
 
 	@GetMapping("/usuarios/{id}")
-	public ResponseEntity<UsuarioResponseCrear> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
+	public ResponseEntity<Object> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
 			throws ResourceNotFoundException {
 		UsuarioResponseCrear usuarios2 = new UsuarioResponseCrear();
 		Usuario usuarios = usrRepository.findById(usuarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
+
 		
 		usuarios2.setId( usuarios.getId());
 		usuarios2.setCreated( usuarios.getCreate()) ;
 		usuarios2.setModified( usuarios.getModified() );
 		usuarios2.setLast_login( usuarios.getLast_login() );
+		usuarios2.setToken( usuarios.getToken() );
 		usuarios2.setIsactive(usuarios.getIsactive());
 		
-		return ResponseEntity.ok().body(usuarios2);
+		//return ResponseEntity.ok().body(usuarios);
+		
+		return 	new ResponseEntity<>( usuarios2 , HttpStatus.OK);
 	}
 
 	@PostMapping("/usuarios")
-	public UsuarioResponseCrear createUsuario(@Valid @RequestBody Usuario usuarios) {
+	public ResponseEntity<Object> createUsuario(@Valid @RequestBody Usuario usuario) { 
 		
 		Usuario usuarioIn = new Usuario();
-		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear(); 
-		usuarioIn  = usrRepository.save(usuarios);
+		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
 		
-		usuarioResponse.setId(usuarioIn.getId());
-		usuarioResponse.setCreated(usuarioIn.getCreate());
-		usuarioResponse.setModified(usuarioIn.getModified());
-		usuarioResponse.setLast_login(usuarioIn.getLast_login());
-		usuarioResponse.setIsactive(usuarioIn.getIsactive());
+		UsuarioResponseCrear usuarioResponse2 = new UsuarioResponseCrear(); 
+
 		
-		return usuarioResponse;
+		ValidarUsuario value_email = new ValidarUsuario();
+		
+		
+		
+		
+		
+		if (value_email.correoValidar(usuario.getEmail()) == false) {
+			usuarioResponse2.getMessageEmail(usuario.getEmail());
+			
+			Object resp = "'transaccion':'invalida','error':'email'";
+			// System.out.println("correo no es correcto  ");
+			 
+			
+			return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
+			
+		}else {
+			usuarioIn  = usrRepository.save(usuario);
+			usuarioResponse.setId(usuarioIn.getId());
+			usuarioResponse.setCreated(usuarioIn.getCreate());
+			usuarioResponse.setModified(usuarioIn.getModified());
+			usuarioResponse.setLast_login(usuarioIn.getLast_login());
+			usuarioResponse.setIsactive(usuarioIn.getIsactive());
+			return  new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
+		}
 	}
 
 	@PutMapping("/usuarios/{id}")
@@ -101,6 +127,7 @@ public class UsuariosController {
  
     
    
-    
+
+	
 
 }

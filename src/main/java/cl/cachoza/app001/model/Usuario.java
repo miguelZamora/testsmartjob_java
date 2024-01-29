@@ -2,6 +2,9 @@ package cl.cachoza.app001.model;
 
 import java.util.Date;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 
 
  
@@ -21,16 +25,15 @@ import jakarta.persistence.TemporalType;
 public class Usuario {
 
 	private long id;
+	
+	
 	private String name;
 
-	
+	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
 	private String email;
-	private String password;
-
 	
-	 /* 
-	  * actualizacion uso de aspectos   
-	  * */
+	
+	private String password;
 	
 	@Column(name = "modified")
 	@Temporal(TemporalType.DATE)
@@ -163,5 +166,8 @@ public class Usuario {
 		return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + ", modified=" + this.modified +  ", last_login=" + this.last_login +  ", token=" + this.token +", isactive=" + this.isactive +"]";
 
 	}
+	
+	
+	 
 	
 }

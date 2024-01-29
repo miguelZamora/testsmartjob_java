@@ -85,6 +85,13 @@ public class UsuarioResponseCrear {
 		}
 		
 		
-		
+		public String getMessageEmail(String mensaje)	{
+			mensaje = "email no valido";
+			
+			
+			
+			return mensaje;
+
+		}
 
 }
