@@ -1,0 +1,16 @@
+[{
+    "name":"miguel Angel",
+    "email":"micoprreo@gmail.com",
+    "password":"123456",
+    "token" : "dhvhd"
+},{
+    "name":"Jhon Doe",
+    "email":"JhonDoe@gmail.com",
+    "password":"123456",
+    "token" : "dhvhd1"
+},{
+    "name":"Angelina Smith",
+    "email":"AngelSmith@gmail.com",
+    "password":"123456",
+    "token" : "dhvhd3"
+}]

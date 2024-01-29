@@ -1,0 +1,10 @@
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\App001Application.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\repository\UsuarioRepository.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\exception\ErrorDetails.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\controller\UsuariosController.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\model\Telefono.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\model\Usuario.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\repository\TelefonosRepository.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\exception\GlobalExceptionHandler.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\exception\ResourceNotFoundException.java
+P:\test workspace\app001\src\main\java\cl\cachoza\app001\service\RegistrarAcciones.java

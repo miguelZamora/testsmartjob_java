@@ -25,6 +25,7 @@ import cl.cachoza.app001.exception.ResourceNotFoundException;
 import cl.cachoza.app001.model.Usuario;
 import cl.cachoza.app001.repository.UsuarioRepository;
  
+ 
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -37,15 +38,20 @@ public class UsuariosController {
 	private UsuarioRepository usrRepository;
 
 	@GetMapping("/usuarios")
-	public List<Usuario> getAllEmployees() {
+	public List<Usuario> getAllUsusarios() {
 		return usrRepository.findAll();
 	}
 
 	@GetMapping("/usuarios/{id}")
 	public ResponseEntity<Usuario> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
 			throws ResourceNotFoundException {
+		
 		Usuario usuarios = usrRepository.findById(usuarioId)
-				.orElseThrow(() -> new ResourceNotFoundException("usuario not found for this id :: " + usuarioId));
+				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
+		System.out.println(" usuarios :::: " + usuarios);
+		
+		//Usuario usuarios = usrRepository.findById(usuarioId)
+		//		.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
 		return ResponseEntity.ok().body(usuarios);
 	}
 
@@ -58,7 +64,7 @@ public class UsuariosController {
 	public ResponseEntity<Usuario> updateUsuario(@PathVariable(value = "id") Long usuariosId,
 			@Valid @RequestBody Usuario usuariosDetails) throws ResourceNotFoundException {
 		Usuario usuarios = usrRepository.findById(usuariosId)
-				.orElseThrow(() -> new ResourceNotFoundException("Usuario not encontrado para el id :: " + usuariosId));
+				.orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el id :: " + usuariosId));
 
 		usuarios.setName(		usuariosDetails.getName());
 		usuarios.setEmail(		usuariosDetails.getEmail());
@@ -73,7 +79,7 @@ public class UsuariosController {
 	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long usuariosId)
 			throws ResourceNotFoundException {
 		Usuario usuarios = usrRepository.findById(usuariosId)
-				.orElseThrow(() -> new ResourceNotFoundException("Usuario not encontrado para el id :: " + usuariosId));
+				.orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el id :: " + usuariosId));
 
 		usrRepository.delete(usuarios);
 		Map<String, Boolean> response = new HashMap<>();

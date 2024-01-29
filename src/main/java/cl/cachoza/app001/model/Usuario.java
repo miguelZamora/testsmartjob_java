@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PostLoad;
-import jakarta.persistence.PostPersist;
 import jakarta.persistence.PostUpdate;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -145,7 +144,8 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + ", modified=" + this.modified +  ", last_login=" + this.last_login +  ", token=" + this.token +"]";
+		// return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + ", modified=" + this.modified +  ", last_login=" + this.last_login +  ", token=" + this.token +"]";
+		return "Usuario [id=" + this.id + ", name=" + this.name + ", email=" + this.email + ", password=" + this.password + ", create=" + this.create + "]";
 	}
 	
 }

@@ -1,0 +1,10 @@
+cl\cachoza\app001\service\RegistrarAcciones.class
+cl\cachoza\app001\exception\ErrorDetails.class
+cl\cachoza\app001\repository\TelefonosRepository.class
+cl\cachoza\app001\model\Usuario.class
+cl\cachoza\app001\exception\GlobalExceptionHandler.class
+cl\cachoza\app001\repository\UsuarioRepository.class
+cl\cachoza\app001\App001Application.class
+cl\cachoza\app001\controller\UsuariosController.class
+cl\cachoza\app001\model\Telefono.class
+cl\cachoza\app001\exception\ResourceNotFoundException.class
