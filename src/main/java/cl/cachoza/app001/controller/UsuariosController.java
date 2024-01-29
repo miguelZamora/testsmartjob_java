@@ -1,13 +1,9 @@
 package cl.cachoza.app001.controller;
 
  
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
-
-import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import cl.cachoza.app001.exception.ResourceNotFoundException;
 import cl.cachoza.app001.model.Usuario;
-import cl.cachoza.app001.model.UsuarioResponse;
-
+import cl.cachoza.app001.model.UsuarioResponseCrear;
 import cl.cachoza.app001.repository.UsuarioRepository;
+import jakarta.validation.Valid;
  
  
 
@@ -46,9 +41,9 @@ public class UsuariosController {
 	}
 
 	@GetMapping("/usuarios/{id}")
-	public ResponseEntity<UsuarioResponse> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
+	public ResponseEntity<UsuarioResponseCrear> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
 			throws ResourceNotFoundException {
-		UsuarioResponse usuarios2 = new UsuarioResponse();
+		UsuarioResponseCrear usuarios2 = new UsuarioResponseCrear();
 		Usuario usuarios = usrRepository.findById(usuarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
 		
@@ -62,8 +57,19 @@ public class UsuariosController {
 	}
 
 	@PostMapping("/usuarios")
-	public Usuario createUsuario(@Valid @RequestBody Usuario usuarios) {
-		return usrRepository.save(usuarios);
+	public UsuarioResponseCrear createUsuario(@Valid @RequestBody Usuario usuarios) {
+		
+		Usuario usuarioIn = new Usuario();
+		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear(); 
+		usuarioIn  = usrRepository.save(usuarios);
+		
+		usuarioResponse.setId(usuarioIn.getId());
+		usuarioResponse.setCreated(usuarioIn.getCreate());
+		usuarioResponse.setModified(usuarioIn.getModified());
+		usuarioResponse.setLast_login(usuarioIn.getLast_login());
+		usuarioResponse.setIsactive(usuarioIn.getIsactive());
+		
+		return usuarioResponse;
 	}
 
 	@PutMapping("/usuarios/{id}")
