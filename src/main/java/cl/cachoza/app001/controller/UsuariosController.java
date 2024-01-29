@@ -50,7 +50,6 @@ public class UsuariosController {
 		Usuario usuarios = usrRepository.findById(usuarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
 
-		
 		usuarios2.setId( usuarios.getId());
 		usuarios2.setCreated( usuarios.getCreate()) ;
 		usuarios2.setModified( usuarios.getModified() );
@@ -66,35 +65,48 @@ public class UsuariosController {
 	@PostMapping("/usuarios")
 	public ResponseEntity<Object> createUsuario(@Valid @RequestBody Usuario usuario) { 
 		
+		System.out.println("la primera usuario --> " + usuario); 
+		
 		Usuario usuarioIn = new Usuario();
+		
 		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
 		
 		UsuarioResponseCrear usuarioResponse2 = new UsuarioResponseCrear(); 
 
-		
-		ValidarUsuario value_email = new ValidarUsuario();
-		
-		
-		
-		
-		
-		if (value_email.correoValidar(usuario.getEmail()) == false) {
-			usuarioResponse2.getMessageEmail(usuario.getEmail());
+		try {
+				ValidarUsuario value_email = new ValidarUsuario();
+				if (value_email.correoValidar(usuario.getEmail()) == false) {
+					usuarioResponse2.getMessageEmail(usuario.getEmail());
+					
+					Object resp = "'transaccion':'invalida','error':'email'";
+					System.out.println("correo no es correcto  ");
+					return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
+					
+				}else {
+					
 			
-			Object resp = "'transaccion':'invalida','error':'email'";
-			// System.out.println("correo no es correcto  ");
-			 
-			
-			return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
-			
-		}else {
-			usuarioIn  = usrRepository.save(usuario);
-			usuarioResponse.setId(usuarioIn.getId());
-			usuarioResponse.setCreated(usuarioIn.getCreate());
-			usuarioResponse.setModified(usuarioIn.getModified());
-			usuarioResponse.setLast_login(usuarioIn.getLast_login());
-			usuarioResponse.setIsactive(usuarioIn.getIsactive());
-			return  new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
+					//System.out.println(usuario);
+					
+					
+					
+					usuarioIn  = usrRepository.save(usuario);
+					
+					// crear el valor de el telefono usuarioIn.getId();
+
+					usuarioResponse.setId(usuarioIn.getId());
+					usuarioResponse.setCreated(usuarioIn.getCreate());
+					usuarioResponse.setModified(usuarioIn.getModified());
+					usuarioResponse.setLast_login(usuarioIn.getLast_login());
+					usuarioResponse.setIsactive(usuarioIn.getIsactive());
+					
+					return  new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
+				}
+		
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("print error mensage : "  + e.getMessage());
+			String resp1 = "{'mensaje' : '"  + e.getMessage() + "'}" ;
+			return 	new ResponseEntity<>( resp1 , HttpStatus.BAD_REQUEST);
 		}
 	}
 

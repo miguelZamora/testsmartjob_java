@@ -1,12 +1,16 @@
 package cl.cachoza.app001.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -17,14 +21,25 @@ import jakarta.persistence.TemporalType;
 
 public class Telefono {
 	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)	
 	private long id;
+	
+	
+	 @OneToMany(mappedBy = "telefonoMap")
+	 private List<Usuario> usuarios;
+	
 	private String number;
 	private String citycode;
 	private String contrycode;
+	
+	 
 	private String usuario_id;
 	private Boolean active = true;
 	
-	
+ 
+ 
 	@Column(name = "create")
 	@Temporal(TemporalType.DATE)
 	private Date create;
@@ -70,25 +85,45 @@ public class Telefono {
 	
 	}
 	
-	public Telefono(String number, String citycode, String contrycode) {
+	
+	public Telefono(String number, 
+			String citycode, 
+			String contrycode)
+	{
 		this.number = number;
 		this.citycode = citycode;
 		this.contrycode = contrycode;
 	}
-
-
-	/**
-	 * @return the id
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
+	public Telefono(String number, 
+			String citycode, 
+			String contrycode,
+			List<Usuario> usuarios)
+	{
+		this.number = number;
+		this.citycode = citycode;
+		this.contrycode = contrycode;
+		this.usuarios = usuarios;
+	}
+	
+	
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public String getNumber() {
