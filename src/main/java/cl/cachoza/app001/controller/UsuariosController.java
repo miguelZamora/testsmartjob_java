@@ -58,29 +58,25 @@ public class UsuariosController {
 		
 		UsuarioResponseCrear usuarios2 = new UsuarioResponseCrear();
 		Telefono teleInRequest = new Telefono();
-		
-		Usuario usuarios = usrRepository.findById(usuarioId)
-				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
-
-		usuarios2.setId( usuarios.getId());
-		usuarios2.setCreated( usuarios.getCreate()) ;
-		usuarios2.setModified( usuarios.getModified() );
-		usuarios2.setLast_login( usuarios.getLast_login() );
-		usuarios2.setToken( usuarios.getToken() );
-		usuarios2.setIsactive(usuarios.getIsactive());
-		
-		teleInRequest = teleRepository.findById(usuarioId)
-				.orElseThrow(() -> new ResourceNotFoundException("usuario sin telefono activos :: " + usuarioId));
-
-		System.out.println("select teleInRequest getId 			: "+teleInRequest.getId());
-		System.out.println("select teleInRequest getCitycode 	: "+teleInRequest.getCitycode());
-		System.out.println("select teleInRequest getContrycode 	: "+teleInRequest.getContrycode());
-		System.out.println("select teleInRequest getNumber		: "+teleInRequest.getNumber());
-		System.out.println("select teleInRequest getActive		: "+teleInRequest.getActive());
-		
-		//return ResponseEntity.ok().body(usuarios);
-		
-		return 	new ResponseEntity<>( usuarios , HttpStatus.OK);
+	
+		try {
+			Usuario usuarios = usrRepository.findById(usuarioId)
+					.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
+	
+			usuarios2.setId( usuarios.getId());
+			usuarios2.setCreated( usuarios.getCreate()) ;
+			usuarios2.setModified( usuarios.getModified() );
+			usuarios2.setLast_login( usuarios.getLast_login() );
+			usuarios2.setToken( usuarios.getToken() );
+			usuarios2.setIsactive(usuarios.getIsactive());
+			
+			return 	new ResponseEntity<>( usuarios , HttpStatus.OK);
+			
+		}catch (Exception e) {
+			String resp1 = "{'mensaje' : '"  + e.getMessage() + "'}" ;
+			
+			return 	new ResponseEntity<>( resp1 , HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/usuarios")
@@ -101,19 +97,18 @@ public class UsuariosController {
 		
 		
 		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
+
 		
 		
 		try {
 				ValidarUsuario value_email = new ValidarUsuario();
 				if (value_email.correoValidar(usuarioRequest.getEmail()) == false) {
-					Object resp = "{'transaccion':'invalida','error':'email'}";
+					Object resp = "{'mensaje': 'email invalido'}";
 					System.out.println("correo no es correcto  ");
 					return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
 					
 				}else {
 					 
-				
-					
 					/* insert tabla tbl_usuarios */
 					usuarioIn.setName(usuarioRequest.getName());
 					usuarioIn.setEmail(usuarioRequest.getEmail());
@@ -153,29 +148,40 @@ public class UsuariosController {
 	}
 
 	@PutMapping("/usuarios/{id}")
-	public ResponseEntity<Usuario> updateUsuario(@PathVariable(value = "id") Long usuariosId,
+	public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") Long usuariosId, 
 			@Valid @RequestBody Usuario usuariosDetails) throws ResourceNotFoundException {
-		Usuario usuarios = usrRepository.findById(usuariosId)
-				.orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el id :: " + usuariosId));
-
-		usuarios.setName(		usuariosDetails.getName());
-		usuarios.setEmail(		usuariosDetails.getEmail());
-		usuarios.setPassword(	usuariosDetails.getPassword());
 		
-		final Usuario updateUsuario = usrRepository.save(usuarios);
-		return ResponseEntity.ok(updateUsuario);
+		String resp1 = "";
+		try {
+			Usuario usuarios = usrRepository.findById(usuariosId)
+					.orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el id :: " + usuariosId));
+	
+			usuarios.setName(		usuariosDetails.getName());
+			usuarios.setEmail(		usuariosDetails.getEmail());
+			usuarios.setPassword(	usuariosDetails.getPassword());
+			
+			final Usuario updateUsuario = usrRepository.save(usuarios);
+			
+			return  new ResponseEntity<>(updateUsuario, HttpStatus.OK);
+			
+		}catch (Exception e) {
+			System.out.println("print error mensage : "  + e.getMessage());
+			 resp1 = "{'mensaje' : '"  + e.getMessage() + "'}" ;
+		}
+		return 	new ResponseEntity<>( resp1 , HttpStatus.BAD_REQUEST);
 	}
 
 
 	@DeleteMapping("/usuarios/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long usuariosId)
+	public Map<String, String> deleteEmployee(@PathVariable(value = "id") Long usuariosId)
 			throws ResourceNotFoundException {
 		Usuario usuarios = usrRepository.findById(usuariosId)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el id :: " + usuariosId));
 
 		usrRepository.delete(usuarios);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
+		Map<String, String> response = new HashMap<>();
+		
+		response.put("mensaje", "Usuario eliminado :: id " + usuariosId);
 		return response;
 	}
  

@@ -3,23 +3,19 @@ package cl.cachoza.app001.exception;
 import java.util.Date;
 
 public class ErrorDetails {
-	private Date timestamp;
-	private String message;
+	
+	private String mensaje;
 	private String details;
 
-	public ErrorDetails(Date timestamp, String message, String details) {
+	public ErrorDetails(String mensaje, String details) {
 		super();
-		this.timestamp = timestamp;
-		this.message = message;
+		this.mensaje = mensaje;
 		this.details = details;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public String getMessage() {
-		return message;
+ 
+	public String getMensaje() {
+		return mensaje;
 	}
 
 	public String getDetails() {
