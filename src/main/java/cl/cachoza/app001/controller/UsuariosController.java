@@ -55,7 +55,10 @@ public class UsuariosController {
 	@GetMapping("/usuarios/{id}")
 	public ResponseEntity<Object> getUsuarioById(@PathVariable(value = "id") Long usuarioId)
 			throws ResourceNotFoundException {
+		
 		UsuarioResponseCrear usuarios2 = new UsuarioResponseCrear();
+		Telefono teleInRequest = new Telefono();
+		
 		Usuario usuarios = usrRepository.findById(usuarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("usuario no encontrado para este id :: " + usuarioId));
 
@@ -66,29 +69,44 @@ public class UsuariosController {
 		usuarios2.setToken( usuarios.getToken() );
 		usuarios2.setIsactive(usuarios.getIsactive());
 		
+		teleInRequest = teleRepository.findById(usuarioId)
+				.orElseThrow(() -> new ResourceNotFoundException("usuario sin telefono activos :: " + usuarioId));
+
+		System.out.println("select teleInRequest getId 			: "+teleInRequest.getId());
+		System.out.println("select teleInRequest getCitycode 	: "+teleInRequest.getCitycode());
+		System.out.println("select teleInRequest getContrycode 	: "+teleInRequest.getContrycode());
+		System.out.println("select teleInRequest getNumber		: "+teleInRequest.getNumber());
+		System.out.println("select teleInRequest getActive		: "+teleInRequest.getActive());
+		
 		//return ResponseEntity.ok().body(usuarios);
 		
-		return 	new ResponseEntity<>( usuarios2 , HttpStatus.OK);
+		return 	new ResponseEntity<>( usuarios , HttpStatus.OK);
 	}
 
 	@PostMapping("/usuarios")
-	public ResponseEntity<Object> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) { 
-		
-		 
-		
+	public ResponseEntity<Object> createUsuario(@RequestBody UsuarioRequest usuarioRequest) { 
+
 		Usuario usuarioIn = new Usuario();
+		Usuario uResponse = new Usuario();
 		Telefono teleInRequest = new Telefono();
+		Telefono teleInResponse = new Telefono();
 		
-		UsuarioResponseCrear usuarioResponseCrear = new UsuarioResponseCrear();
+		System.out.println("asdasd " + usuarioRequest.getPhones());
+		
+		
+		System.out.println("post getPhones.get('number' : " + usuarioRequest.getPhones().get("number"));
+		System.out.println("post getPhones.get('citycode' : " +usuarioRequest.getPhones().get("citycode") );
+		System.out.println("post getPhones.get('contrycode' : " + usuarioRequest.getPhones().get("contrycode")  );
+		
 		
 		
 		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
- 
-
+		
+		
 		try {
 				ValidarUsuario value_email = new ValidarUsuario();
 				if (value_email.correoValidar(usuarioRequest.getEmail()) == false) {
-					Object resp = "'transaccion':'invalida','error':'email'";
+					Object resp = "{'transaccion':'invalida','error':'email'}";
 					System.out.println("correo no es correcto  ");
 					return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
 					
@@ -98,20 +116,18 @@ public class UsuariosController {
 					usuarioIn.setName(usuarioRequest.getName());
 					usuarioIn.setEmail(usuarioRequest.getEmail());
 					usuarioIn.setPassword(usuarioRequest.getPassword());
-					 
-					usrRepository.save(usuarioIn);
 					
-
-					teleInRequest.setNumber(usuarioRequest.getNumero());
-					teleInRequest.setCitycode(usuarioRequest.getCitycode());
-					teleInRequest.setContrycode(teleInRequest.getContrycode());
+					uResponse = usrRepository.save(usuarioIn);
 					
-					teleInRequest.setUsuario_id(teleInRequest.getUsuario_id());
+					teleInRequest.setNumber(usuarioRequest.getPhones().get("number") );
+					teleInRequest.setCitycode(usuarioRequest.getPhones().get("citycode") );
+					teleInRequest.setContrycode(usuarioRequest.getPhones().get("contrycode"));
 					
-					System.out.println("usuarioInRequest : " + teleInRequest);
+					teleInRequest.setUsuario_id( String.valueOf(uResponse.getId()) );
+					teleInResponse = teleRepository.save(teleInRequest);
 					
-					teleRepository.save(teleInRequest);
-					//usuarioResponseCrear
+					System.out.println("teleInResponse [ " + teleInResponse  + " ]");
+					
 					usuarioResponse.setId(usuarioIn.getId());
 					usuarioResponse.setCreated(usuarioIn.getCreate());
 					usuarioResponse.setModified(usuarioIn.getModified());
@@ -125,6 +141,7 @@ public class UsuariosController {
 			// TODO: handle exception
 			System.out.println("print error mensage : "  + e.getMessage());
 			String resp1 = "{'mensaje' : '"  + e.getMessage() + "'}" ;
+			
 			return 	new ResponseEntity<>( resp1 , HttpStatus.BAD_REQUEST);
 		}
 	}

@@ -1,0 +1,11 @@
+package cl.cachoza.app001.dto;
+
+import java.util.List;
+
+public class UsuarioDto2 {
+    private Long id;
+    private String name;
+    private String phoneNumber;
+    private String city;
+    private List<TelefonosDto2> telefonos;
+}

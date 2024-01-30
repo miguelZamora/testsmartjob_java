@@ -7,11 +7,20 @@
 	},
 	"item": [
 		{
-			"name": "1",
+			"name": "Usuarios",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": "localhost:8080/api/v1/usuarios/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Telefonos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/telefonos/1"
 			},
 			"response": []
 		},
@@ -37,13 +46,13 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "insertar usuario 1",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"jhon2 2 smith\",\r\n    \"email\":\"weqwe@gmail.com\",\r\n    \"password\":\"123456asda\",\r\n    \"token\" : \"dhvhd3\"\r\n} ",
+					"raw": "{\r\n    \"name\": \"jhon smith\",\r\n    \"email\": \"jhonsmith@gmail.com\",\r\n    \"password\": \"asadosgwgwg\",\r\n    \"phones\": {\"number\": \"55666121\",\"citycode\": \"022\",\"contrycode\": \"56\"}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,13 +64,13 @@
 			"response": []
 		},
 		{
-			"name": "Request array",
+			"name": "insertar usuario 2",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"jhon smith\",\r\n    \"email\":\"aa2222@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"token\" : \"dhvhd3\",\r\n    \"phones\":  \r\n            { \"number\":\"55555555\", \"citycode\":\"2\", \"contrycode\":\"56\"}\r\n             \r\n} ",
+					"raw": "{\r\n    \"name\": \"Maria Pilar Smith\",\r\n    \"email\": \"mariapilars@gmail.com\",\r\n    \"password\": \"asasd234sda\",\r\n    \"phones\": {\"number\": \"556525541\",\"citycode\": \"02\",\"contrycode\": \"120\"}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -73,7 +82,25 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Insertar error email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"jhon smith\",\r\n    \"email\":\"@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"phones\": { \"number\":\"55555555\", \"citycode\":\"2\", \"contrycode\":\"56\"} \r\n             \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/usuarios"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Usuaio 1",
 			"request": {
 				"method": "PUT",
 				"header": [],

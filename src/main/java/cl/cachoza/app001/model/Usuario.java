@@ -64,7 +64,16 @@ public class Usuario {
 		create = new Date();
 	}
 
-	private String token;
+	
+	
+
+	@Column(name="token")
+	@GeneratedValue(strategy = GenerationType.UUID)
+    private String token ;
+    
+    
+	
+    
 
 	private Boolean isactive = true;
 
