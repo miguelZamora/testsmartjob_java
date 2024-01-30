@@ -1,5 +1,14 @@
 # testsmartjob_java
-api restfull springboot
+Api restfull springboot 
+
+
+debe descargar el proyecto desde git
+
+![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/e4194fba-715b-4193-9265-a483c56ee3a3)
+
+
+
+
 
 se debe usar postman para iniciar a operar
 
