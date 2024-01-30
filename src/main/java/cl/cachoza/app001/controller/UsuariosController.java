@@ -21,8 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.cachoza.app001.exception.ErrorDetails;
 import cl.cachoza.app001.exception.ResourceNotFoundException;
 import cl.cachoza.app001.model.Usuario;
+import cl.cachoza.app001.model.Telefono;
+import cl.cachoza.app001.model.UsuarioRequest;
 import cl.cachoza.app001.model.UsuarioResponseCrear;
+
+import cl.cachoza.app001.repository.TelefonosRepository;
 import cl.cachoza.app001.repository.UsuarioRepository;
+ 
 import cl.cachoza.app001.util.ValidarUsuario;
 import jakarta.validation.Valid;
  
@@ -38,6 +43,10 @@ public class UsuariosController {
 	@Autowired
 	private UsuarioRepository usrRepository;
 
+	@Autowired
+	private TelefonosRepository teleRepository;	
+	
+	
 	@GetMapping("/usuarios")
 	public List<Usuario> getAllUsusarios() {
 		return usrRepository.findAll();
@@ -63,36 +72,46 @@ public class UsuariosController {
 	}
 
 	@PostMapping("/usuarios")
-	public ResponseEntity<Object> createUsuario(@Valid @RequestBody Usuario usuario) { 
+	public ResponseEntity<Object> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) { 
 		
-		System.out.println("la primera usuario --> " + usuario); 
+		 
 		
 		Usuario usuarioIn = new Usuario();
+		Telefono teleInRequest = new Telefono();
+		
+		UsuarioResponseCrear usuarioResponseCrear = new UsuarioResponseCrear();
+		
 		
 		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
-		
-		UsuarioResponseCrear usuarioResponse2 = new UsuarioResponseCrear(); 
+ 
 
 		try {
 				ValidarUsuario value_email = new ValidarUsuario();
-				if (value_email.correoValidar(usuario.getEmail()) == false) {
-					usuarioResponse2.getMessageEmail(usuario.getEmail());
-					
+				if (value_email.correoValidar(usuarioRequest.getEmail()) == false) {
 					Object resp = "'transaccion':'invalida','error':'email'";
 					System.out.println("correo no es correcto  ");
 					return 	new ResponseEntity<>( resp , HttpStatus.BAD_REQUEST);
 					
 				}else {
+					 
+				
+					usuarioIn.setName(usuarioRequest.getName());
+					usuarioIn.setEmail(usuarioRequest.getEmail());
+					usuarioIn.setPassword(usuarioRequest.getPassword());
+					 
+					usrRepository.save(usuarioIn);
 					
-			
-					//System.out.println(usuario);
-					
-					
-					
-					usuarioIn  = usrRepository.save(usuario);
-					
-					// crear el valor de el telefono usuarioIn.getId();
 
+					teleInRequest.setNumber(usuarioRequest.getNumero());
+					teleInRequest.setCitycode(usuarioRequest.getCitycode());
+					teleInRequest.setContrycode(teleInRequest.getContrycode());
+					
+					teleInRequest.setUsuario_id(teleInRequest.getUsuario_id());
+					
+					System.out.println("usuarioInRequest : " + teleInRequest);
+					
+					teleRepository.save(teleInRequest);
+					//usuarioResponseCrear
 					usuarioResponse.setId(usuarioIn.getId());
 					usuarioResponse.setCreated(usuarioIn.getCreate());
 					usuarioResponse.setModified(usuarioIn.getModified());

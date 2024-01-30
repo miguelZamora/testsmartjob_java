@@ -1,0 +1,23 @@
+post
+{
+    "name":"jhon2 smith",
+    "email":"weqwe@gmail.com",
+    "password":"123456asda",
+    "token" : "dhvhd3"
+} 
+
+resp post 
+
+{
+    "id": 8,
+    "created": "2024-01-29T21:10:52.583+00:00",
+    "modified": null,
+    "last_login": null,
+    "token": null,
+    "isactive": true
+}
+
+
+
+
+

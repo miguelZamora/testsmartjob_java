@@ -81,23 +81,14 @@ public class Usuario {
 	}
 
 	public Usuario(String name, String email, String password) {
+
 		this.name = name;
 		this.email = email;
 		this.password = password;
 
 	}
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id", nullable = true)
-	private Telefono telefonoMap;
 	
-	public Usuario(String name, String email, String password, Telefono telefonoMap) {
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.telefonoMap = telefonoMap;
-	}
-
 	public long getId() {
 		return id;
 	}
