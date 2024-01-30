@@ -29,15 +29,17 @@ Debemos descargar el Postman y la configuracion para realizar pruebas
 
 
 
-el archivo con la configuracion
+Descargue el archivo con la configuracion de postman
 
-Descargue el archivo json con 
 
 https://github.com/miguelZamora/testsmartjob_java/blob/main/documentacion/http---localhost-8080-api-v1-usuarios.postman_collection.json
 
-y luego importelo a su POSTMAN como en la imagen 
+importelo el archivo a su POSTMAN como en la imagen 
 
 ![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/b6684177-300f-4ccb-959b-c472f988b779)
+
+Commandos y ejemplos estan dentro 
+
 
 
 GET /1 
