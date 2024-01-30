@@ -1,14 +1,19 @@
 package cl.cachoza.app001.model;
 
 import java.util.HashMap;
-
+import java.util.UUID;
 public class UsuarioRequest {
 
 	private String name;
 	private String email;
 	private String password;
 	
-	private String token;
+
+	UUID uuid = UUID.randomUUID();
+	
+	private String token = uuid.toString();;
+	
+    
 	private Long usuario_id;
 	
 	private String number;
@@ -58,15 +63,14 @@ public class UsuarioRequest {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
 	public Long getUsuario_id() {
 		return usuario_id;
 	}
 	public void setUsuario_id(Long usuario_id) {
 		this.usuario_id = usuario_id;
 	}
-	
- 
-	
+	 
 	public HashMap<String, String> getPhones() {
 		return phones;
 	}
@@ -76,15 +80,4 @@ public class UsuarioRequest {
 	}
 
 	
-
-
-	
-	
-	
-	
-	
-	
-	
-
-
 }

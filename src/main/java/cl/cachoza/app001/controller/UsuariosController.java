@@ -91,13 +91,13 @@ public class UsuariosController {
 		Telefono teleInRequest = new Telefono();
 		Telefono teleInResponse = new Telefono();
 		
-		System.out.println("asdasd " + usuarioRequest.getPhones());
+		System.out.println("usuarioRequest " + usuarioRequest );
 		
 		
 		System.out.println("post getPhones.get('number' : " + usuarioRequest.getPhones().get("number"));
 		System.out.println("post getPhones.get('citycode' : " +usuarioRequest.getPhones().get("citycode") );
 		System.out.println("post getPhones.get('contrycode' : " + usuarioRequest.getPhones().get("contrycode")  );
-		
+		System.out.println("post usuarioRequest.getToken() : " + usuarioRequest.getToken());
 		
 		
 		UsuarioResponseCrear usuarioResponse = new UsuarioResponseCrear();
@@ -113,32 +113,38 @@ public class UsuariosController {
 				}else {
 					 
 				
+					
+					/* insert tabla tbl_usuarios */
 					usuarioIn.setName(usuarioRequest.getName());
 					usuarioIn.setEmail(usuarioRequest.getEmail());
 					usuarioIn.setPassword(usuarioRequest.getPassword());
-					
+					usuarioIn.setToken(usuarioRequest.getToken());
 					uResponse = usrRepository.save(usuarioIn);
-					
+
+					/* insert tabla tbl_phonos */
 					teleInRequest.setNumber(usuarioRequest.getPhones().get("number") );
 					teleInRequest.setCitycode(usuarioRequest.getPhones().get("citycode") );
 					teleInRequest.setContrycode(usuarioRequest.getPhones().get("contrycode"));
-					
 					teleInRequest.setUsuario_id( String.valueOf(uResponse.getId()) );
 					teleInResponse = teleRepository.save(teleInRequest);
+
+					/* objeto respuesta OK  */
 					
-					System.out.println("teleInResponse [ " + teleInResponse  + " ]");
+					usuarioResponse.setId(uResponse.getId());
+					usuarioResponse.setName(uResponse.getName());
+					usuarioResponse.setCreated(uResponse.getCreate());
+					usuarioResponse.setModified(uResponse.getModified());
+					usuarioResponse.setLast_login(uResponse.getLast_login());
+					usuarioResponse.setIsactive(uResponse.getIsactive());
+					usuarioResponse.setToken(usuarioIn.getToken());
 					
-					usuarioResponse.setId(usuarioIn.getId());
-					usuarioResponse.setCreated(usuarioIn.getCreate());
-					usuarioResponse.setModified(usuarioIn.getModified());
-					usuarioResponse.setLast_login(usuarioIn.getLast_login());
-					usuarioResponse.setIsactive(usuarioIn.getIsactive());
+					
 					
 					return  new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
 				}
 		
 		}catch (Exception e) {
-			// TODO: handle exception
+			
 			System.out.println("print error mensage : "  + e.getMessage());
 			String resp1 = "{'mensaje' : '"  + e.getMessage() + "'}" ;
 			
