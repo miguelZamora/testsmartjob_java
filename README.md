@@ -4,28 +4,30 @@ Api restfull springboot
 Requisitos iniciales
 
 Java 17 
+
 ![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/980021d7-b4f2-4143-817a-37bf8bdc3c32)
 
 Spring Tool Suite 4
+
 ![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/2a09d41f-d1b0-4d08-bd06-032feb759d91)
 
 
 
-
-debe descargar el proyecto desde git a una carpeta 
+Se debe descargar el proyecto desde git a una carpeta 
 
 comando de git : 
-
 git clone git@github.com:miguelZamora/testsmartjob_java.git
-
 
 ![image](https://github.com/miguelZamora/testsmartjob_java/assets/8809742/e4194fba-715b-4193-9265-a483c56ee3a3)
 
 
 
+Debemos descargar el Postman y la configuracion para realizar pruebas 
+
+[!NOTE]
+> [descargar postman] (https://www.postman.com/downloads/)
 
 
-se debe usar postman para iniciar a operar
 
 el archivo con la configuracion
 
