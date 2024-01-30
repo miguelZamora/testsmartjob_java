@@ -1,6 +1,11 @@
 # testsmartjob_java
 Api restfull springboot 
 
+Base de datos H2 hibernate JPA 
+
+se crea la db en tiempo de ejecucion 
+
+
 Requisitos iniciales
 
 Java 17 
